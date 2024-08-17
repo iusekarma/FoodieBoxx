@@ -8,6 +8,34 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from django.middleware.csrf import get_token
+
+@csrf_exempt
+def api_login(request):
+    if request.method == 'POST':
+        # Extract credentials from the request body
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        
+        # Authenticate the user
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'success': True, 'message': 'Logged in successfully'})
+        else:
+            return JsonResponse({'success': False, 'message': 'Invalid credentials'}, status=401)
+    
+    return JsonResponse({'error': 'POST request required'}, status=400)
+
+def set_csrf_token(request):
+    response = JsonResponse({'message': 'CSRF cookie set'})
+    response['X-CSRFToken'] = get_token(request)
+    return response
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -108,31 +136,3 @@ def payment_success(request):
 
 def payment_cancel(request):
     return render(request, 'orders/payment_cancel.html')
-
-# @login_required
-# def order_view(request):
-#     if request.method == 'POST':
-#         order = Order(customer=request.user)
-#         order.save()
-#         total_amount = 0
-#         for dish_id, quantity in zip(request.POST.getlist('dishes[]'),
-#                                      request.POST.getlist('quantities[]')):
-#             dish_id = int(dish_id)
-#             quantity = int(quantity)
-#             dish = Dish.objects.get(pk=dish_id)
-#             order_item = OrderItem(order=order, dish=dish, quantity=quantity)
-#             order_item.save()
-#             total_amount += dish.price * quantity
-#         order.total_amount = total_amount
-#         order.save()
-                
-#     dishes = []
-#     for dish in Dish.objects.all():
-#         dishes.append({
-#             'id': dish.id,
-#             'name': dish.name,
-#             'price': dish.price,
-#             'image': dish.image.url,
-#             'available': dish.available
-#         })
-#     return render(request, 'orders/order.html', {'dishes':tuple(dishes)})
