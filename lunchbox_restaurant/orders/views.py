@@ -109,30 +109,14 @@ def payment_success(request):
 def payment_cancel(request):
     return render(request, 'orders/payment_cancel.html')
 
-# @login_required
-# def order_view(request):
-#     if request.method == 'POST':
-#         order = Order(customer=request.user)
-#         order.save()
-#         total_amount = 0
-#         for dish_id, quantity in zip(request.POST.getlist('dishes[]'),
-#                                      request.POST.getlist('quantities[]')):
-#             dish_id = int(dish_id)
-#             quantity = int(quantity)
-#             dish = Dish.objects.get(pk=dish_id)
-#             order_item = OrderItem(order=order, dish=dish, quantity=quantity)
-#             order_item.save()
-#             total_amount += dish.price * quantity
-#         order.total_amount = total_amount
-#         order.save()
-                
-#     dishes = []
-#     for dish in Dish.objects.all():
-#         dishes.append({
-#             'id': dish.id,
-#             'name': dish.name,
-#             'price': dish.price,
-#             'image': dish.image.url,
-#             'available': dish.available
-#         })
-#     return render(request, 'orders/order.html', {'dishes':tuple(dishes)})
+@login_required
+def previous_orders(request):
+    orders = Order.objects.filter(customer=request.user).all()
+    orders_list = []
+    for order in orders:
+        order_items = OrderItem.objects.filter(order=order).all()
+        orders_list.append({
+            'order':order,
+            'items':order_items
+        })
+    return render(request, 'orders/previous_order.html', {'list':tuple(orders_list)})
