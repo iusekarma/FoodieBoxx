@@ -18,7 +18,7 @@ FoodieBox streamlines restaurant operations by providing an intuitive interface 
 
 ## Features
 
-- **Real-Time Order Tracking:**(Coming soon in future version) Customers can track the status of their orders with a progress bar showing stages like "Order Received," "Being Prepared," "Out for Delivery," and "Delivered."
+- **Real-Time Order Tracking:**(**Coming soon in future version**) Customers can track the status of their orders with a progress bar showing stages like "Order Received," "Being Prepared," "Out for Delivery," and "Delivered."
 - **Secure Payment Processing:** Customers can securely enter their payment details, and the system ensures a smooth payment process with immediate feedback on success or failure.
 - **Order History:** Users can view their past orders and easily reorder items.
 - **Responsive Design:** The interface is optimized for both desktop and mobile devices, ensuring a seamless user experience across all platforms.
@@ -84,7 +84,10 @@ lunchbox_restaurant/
 
 Follow these steps to set up and run the project on your local machine:
 
-### git clone 
+### Git Clone
+```bash
+git clone https://github.com/username/foodiebox.git
+```
 
 ### Create a Virtual Environment:
 
