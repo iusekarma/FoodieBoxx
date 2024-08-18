@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Canceled</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<div class="container mt-5">
-    <h2>Payment Canceled</h2>
+{% extends "orders/base.html" %}
+
+{% block content %}
+    <h2><strong>Payment Canceled</strong></h2>
     <p>Your payment was canceled. You can try placing the order again.</p>
-    <a href="{% url 'order' %}" class="btn btn-primary">Go Back to Order Page</a>
-</div>
-</body>
-</html>
+    <br>
+    <a href="{% url 'order' %}" class="bg-blue-500 text-white py-2 px-6 rounded-full font-semibold hover:bg-blue-600 transition duration-300">Go Back to Order Page</a>
+{% endblock %}

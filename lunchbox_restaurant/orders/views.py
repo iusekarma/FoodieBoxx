@@ -1,5 +1,4 @@
 import stripe
-# from .forms import OrderForm, OrderItemFormSet
 from .models import Order, OrderItem, Dish
 from .forms import RegistrationForm
 from django.conf import settings
@@ -40,7 +39,7 @@ def login_view(request):
 @login_required
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
 
 @login_required
 def order_view(request):
@@ -99,7 +98,8 @@ def order_view(request):
             'name': dish.name,
             'price': dish.price,
             'image': dish.image.url,
-            'available': dish.available
+            'available': dish.available,
+            'description': dish.description
         })
     return render(request, 'orders/order.html', {'dishes': tuple(dishes)})
 
@@ -124,4 +124,14 @@ def previous_orders(request):
 
 
 def home_view(request):
-    return render(request,'orders/home.html')
+    dishes = []
+    for dish in Dish.objects.all():
+        dishes.append({
+            'id': dish.id,
+            'name': dish.name,
+            'price': dish.price,
+            'image': dish.image.url,
+            'available': dish.available,
+            'description': dish.description
+        })
+    return render(request,'orders/home.html', {'dishes': tuple(dishes)})
