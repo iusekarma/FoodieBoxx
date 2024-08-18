@@ -1,98 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Order Form</title>
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div class="container mt-5">
-      <h2>Place Your Order</h2>
+{% extends "orders/base.html" %}
 
-      <form id="orderForm" method="post">
+{% block content %}
+    <section class="mt-16 p-8 bg-white rounded-3xl shadow-lg w-1/2">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">Place Your Order</h2>
+      <form id="orderForm" method="post" class="space-y-4">
         {% csrf_token %}
-        <div id="itemsContainer">
+        <div id="itemsContainer" class="space-y-4">
           <!-- This is where selected items will appear -->
         </div>
-
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-toggle="modal"
-          data-target="#itemModal"
-        >
-          Add Items
-        </button>
-
-        <button type="submit" class="btn btn-success mt-3">Submit Order</button>
+        <div class="flex justify-between">
+          <button
+            type="button"
+            class="bg-blue-500 text-white py-2 px-6 rounded-full font-semibold hover:bg-blue-600 transition duration-300"
+            data-toggle="modal"
+            data-target="#itemModal"
+          >
+            Add Items
+          </button>
+          <button
+            type="submit"
+            class="bg-green-500 text-white py-2 px-6 rounded-full font-semibold hover:bg-green-600 transition duration-300"
+          >
+            Submit Order
+          </button>
+        </div>
       </form>
-    </div>
 
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="itemModal"
-      tabindex="-1"
-      aria-labelledby="itemModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="itemModalLabel">Select Items</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              {% for dish in dishes %}
-              <div class="col-md-4">
-                <div class="card mb-3">
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="itemModal"
+        tabindex="-1"
+        aria-labelledby="itemModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content rounded-2xl">
+            <div class="modal-header">
+              <h5 class="modal-title" id="itemModalLabel">Select Items</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div
+                class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+              >
+                {% for dish in dishes %}
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                   <img
                     src="{{ dish.image }}"
-                    class="card-img-top"
-                    alt="Dish 1"
+                    class="w-full h-32 object-cover"
+                    alt="{{ dish.name }}"
                   />
-                  <div class="card-body">
-                    <h5 class="card-title">{{ dish.name }}</h5>
-                    <p class="card-text">${{ dish.price }}</p>
+                  <div class="p-4">
+                    <h5 class="text-lg font-semibold">{{ dish.name }}</h5>
+                    <p class="text-gray-600">${{ dish.price }}</p>
                     <button
                       type="button"
-                      class="btn btn-primary add-item"
+                      class="mt-2 w-full bg-blue-500 text-white py-2 rounded-full font-semibold hover:bg-blue-600 transition duration-300 add-item"
                       data-item-id="{{ dish.id }}"
+                      data-item-name="{{ dish.name }}"
+                      data-item-price="{{ dish.price }}"
                     >
                       Add
                     </button>
                   </div>
                 </div>
+                {% endfor %}
               </div>
-              {% endfor %}
             </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="bg-gray-400 text-white py-2 px-6 rounded-full font-semibold hover:bg-gray-500 transition duration-300"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
+    </section>
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
@@ -103,19 +98,24 @@
         // Handle adding items from the modal
         $(".add-item").click(function () {
           const itemId = $(this).data("item-id");
+          const itemName = $(this).data("item-name");
+          const itemPrice = $(this).data("item-price");
           const itemRow = `
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Item ID:</label>
-                    <div class="col-sm-3">
-                        <input type="number" class="form-control" name="dishes[]" value="${itemId}" readonly>
-                    </div>
-                    <label class="col-sm-2 col-form-label">Quantity:</label>
-                    <div class="col-sm-3">
-                        <input type="number" class="form-control" name="quantities[]" value="1" min="1">
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button" class="btn btn-danger remove-item">Remove</button>
-                    </div>
+                <div class="flex items-center space-x-4 py-2">
+                    <input type="number" class="hidden" name="dishes[]" value="${itemId}" readonly>
+                    <span class="w-3/5">
+                      <span class=""><strong>${itemName}</strong> : </span>
+                      <span class="py-2">$${itemPrice}</span>
+                    </span>
+
+                    <label class="w-1/6 text-right text-gray-700 mb-0">Qty:</label>
+                    <input type="number" class="w-1/6 form-control-sm border border-gray-300 rounded px-2 py-1" name="quantities[]" value="1" min="1">
+                    
+                    <button type="button" class="w-8 text-red-600 hover:text-red-800 transition-colors duration-200 remove-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
                 </div>
             `;
           $("#itemsContainer").append(itemRow);
@@ -128,5 +128,4 @@
         });
       });
     </script>
-  </body>
-</html>
+{% endblock %}
