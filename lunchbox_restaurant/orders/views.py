@@ -120,3 +120,8 @@ def previous_orders(request):
             'items':order_items
         })
     return render(request, 'orders/previous_order.html', {'list':tuple(orders_list)})
+
+
+
+def home_view(request):
+    return render(request,'orders/home.html')

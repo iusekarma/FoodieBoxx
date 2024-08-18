@@ -1,3 +1,7 @@
 .venv
 db.sqlite3
 .env
+env/
+lunchbox_restaurant/lunchbox_restaurant/__pycache__/
+lunchbox_restaurant/orders/__pycache__/
+lunchbox_restaurant/orders/migrations/__pycache__/
