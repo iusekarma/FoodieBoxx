@@ -124,8 +124,7 @@ Open your browser and go to http://127.0.0.1:8000/.
 
 ## Design Flow
 
-![Design Flow](./lunchbox_restaurant/FoodieBox Design.jpg)
-
+![Preview](./lunchbox_restaurant/FoodieBox Design.jpg) 
 
 [Visit Wireframe](https://app.visily.ai/projects/4b43ead9-3b5f-43f3-b407-ca6efb5b776a/boards/1048982)
 
