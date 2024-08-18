@@ -1,6 +1,6 @@
 # FoodieBox
 
-**FoodieBox** is a comprehensive restaurant order management system designed to simplify the process of managing orders, tracking them in real-time, and ensuring secure payment processing. This web application is built using Python Django as the backend framework, with JavaScript, Tailwind CSS, and HTML for the frontend, and MySQL as the database.
+**FoodieBox** is a comprehensive restaurant order management system designed to simplify the process of managing orders, tracking them in real-time, and ensuring secure payment processing. This web application is built using Python Django as the backend framework, with Tailwind CSS, and HTML for the frontend, and MySQL as the database.
 
 ## Table of Contents
 
@@ -124,9 +124,9 @@ Open your browser and go to http://127.0.0.1:8000/.
 
 ## Design Flow
 
-![Design Flow](assets/design_flow.jpg)
+![Design Flow](lunchbox_restaurant/FoodieBox Design.jpg)
 
 
-[Visit Wireframe](https://www.openai.com)
+[Visit Wireframe](https://app.visily.ai/projects/4b43ead9-3b5f-43f3-b407-ca6efb5b776a/boards/1048982)
 
 
