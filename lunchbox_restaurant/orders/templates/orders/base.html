@@ -26,32 +26,29 @@
 <body>
     <div class="flex flex-col items-center justify-center w-full min-h-screen">
         <!-- Navbar -->
-        <div
-          class="fixed top-0 left-0 w-full bg-black text-white shadow-lg z-50 p-2 flex items-center justify-between space-x-2 sm:space-x-4 md:space-x-6"
-          style="font-size: 14px; white-space: nowrap;"
-        >
+        <div class="fixed flex items-center justify-between top-6 bg-black w-full sm:w-4/5 rounded-full mx-auto p-4 sm:p-6 sm:px-10 text-white shadow-lg z-50">
           <!-- Logo or Brand Name -->
-          <div class="text-white font-semibold">
-            <a href="{% url 'home' %}" class="text-white">FOODIEBOX.io</a>
+          <div class="py-2 px-6 text-white font-semibold text-center sm:text-left text-xl sm:text-2xl">
+            <a href="{% url 'home' %}" class="hover:underline">FOODIEBOX.io</a>
           </div>
 
           <!-- Navbar Links -->
-          <div class="flex items-center space-x-2 sm:space-x-4">
+          <div class="flex items-center gap-4">
             {% if not user.is_authenticated %}
             <!-- Login Button -->
             <div
               id="loginBtn"
-              class="bg-gray-200 py-1 px-2 sm:px-4 rounded-full font-bold text-black hover:bg-gray-300 transition duration-300 cursor-pointer text-xs sm:text-sm"
+              class="flex justify-center items-center bg-gray-200 py-2 px-4 rounded-full font-bold text-black hover:bg-gray-300 transition duration-300 cursor-pointer text-sm sm:text-base"
             >
               LOGIN
             </div>
             <!-- Signup Button -->
             <div
-              id="registrationBtn"
-              class="bg-yellow-300 py-1 px-2 sm:px-4 rounded-full font-bold text-black hover:bg-yellow-400 transition duration-300 cursor-pointer text-xs sm:text-sm"
-            >
-              Signup
-            </div>
+            id="registrationBtn"
+            class="flex justify-center items-center bg-yellow-300 py-2 px-4 rounded-full font-bold text-black hover:bg-yellow-400 transition duration-300 cursor-pointer text-sm sm:text-base"
+          >
+            Signup
+          </div>
             {% else %}
             <!-- New Order Button -->
             <a
@@ -69,10 +66,11 @@
             </a>
             <!-- Logout Button -->
             <a
+              id="logoutBtn"
               href="{% url 'logout' %}"
-              class="bg-yellow-300 py-1 px-2 sm:px-4 rounded-full font-bold text-black hover:bg-yellow-400 transition duration-300 text-xs sm:text-sm"
+              class="flex justify-center items-center bg-red-600 py-2 px-4 rounded-full font-bold text-white hover:bg-red-700 transition duration-300 cursor-pointer text-sm sm:text-base"
             >
-              LOGOUT
+              Logout
             </a>
             {% endif %}
           </div>
